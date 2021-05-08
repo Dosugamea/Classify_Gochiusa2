@@ -87,6 +87,7 @@ size = (IMG_SIZE, IMG_SIZE)
 ds_train = tf.keras.preprocessing.image_dataset_from_directory(
     TRAIN_DATA_DIR,
     batch_size=32, image_size=size,
+    label_mode='categorical',
     shuffle=True,
     interpolation='bilinear',
     follow_links=False
@@ -96,6 +97,7 @@ ds_train = tf.keras.preprocessing.image_dataset_from_directory(
 ds_test = tf.keras.preprocessing.image_dataset_from_directory(
     TEST_DATA_DIR,
     batch_size=32, image_size=size,
+    label_mode='categorical',
     shuffle=True,
     interpolation='bilinear',
     follow_links=False
