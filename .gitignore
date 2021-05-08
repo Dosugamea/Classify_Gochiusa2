@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Ignore dataset folder
+archive/
+gochiusa_dataset/
