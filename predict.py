@@ -7,14 +7,14 @@ import os.path
 
 
 class Predictor(object):
-    MODEL_FILE = "./local_train.h5"
+    MODEL_FILE = "./efficient_usagi_B3_epoch30.h5"
     LABELS = [
         'Blue Mountain', 'Chino', 'Chiya',
         'Cocoa', 'Maya', 'Megumi',
         'Mocha', 'Rize', 'Sharo'
     ]
     OUTPUT_DIR = "faces"
-    INPUT_SIZE = 224
+    INPUT_SIZE = 300
     model = None
     face_cascade = None
 
@@ -36,16 +36,14 @@ class Predictor(object):
             print(output_path)
             temp_img = load_img(output_path, target_size=(self.INPUT_SIZE, self.INPUT_SIZE))
             temp_img_array = img_to_array(temp_img)
-            temp_img_array = temp_img_array.astype('float32') / 255.0
-            temp_img_array = temp_img_array.reshape((self.INPUT_SIZE, self.INPUT_SIZE, 3))
+            temp_img_array = temp_img_array.reshape(self.INPUT_SIZE, self.INPUT_SIZE, 3)
             imgs.append(temp_img_array)
         return imgs
 
     def predict_single(self, filename):
         temp_img = load_img(filename, target_size=(self.INPUT_SIZE, self.INPUT_SIZE))
         temp_img_array = img_to_array(temp_img)
-        temp_img_array = temp_img_array /255.0
-        temp_img_array = temp_img_array.reshape((self.INPUT_SIZE, self.INPUT_SIZE, 3))
+        temp_img_array = temp_img_array.reshape(self.INPUT_SIZE, self.INPUT_SIZE, 3)
         prd = self.model.predict(np.array([temp_img_array]))
         print(self.LABELS)
         print([round(v, 4) for v in prd[0]])
@@ -67,6 +65,6 @@ class Predictor(object):
 
 
 if __name__ == '__main__':
-    filename = "./faces/2.jpg"
+    filename = "./regene.jpg"
     cl = Predictor()
-    print(cl.predict_single(filename))
+    print(cl.predict(filename))
